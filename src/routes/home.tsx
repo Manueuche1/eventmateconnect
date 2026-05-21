@@ -55,7 +55,7 @@ function Home() {
             <Rail title="Trending in Lagos" events={trending} />
             <Section title="For you">
               <div className="px-4 space-y-4">
-                {forYou.slice(0, 4).map(e => <EventCard key={e.id} event={e} size="lg" />)}
+                {forYou.slice(0, 4).map(e => <EventCard key={e.id} event={e} variant="foryou" />)}
               </div>
             </Section>
             {musicWeek.length > 0 && <Rail title="Music this week" events={musicWeek} />}
@@ -81,8 +81,10 @@ function Rail({ title, events }: { title: string; events: any[] }) {
   if (events.length === 0) return null;
   return (
     <Section title={title}>
-      <div className="flex gap-3 px-4 overflow-x-auto no-scrollbar pb-1">
-        {events.map(e => <EventCard key={e.id} event={e} />)}
+      <div className="em-rail-fade">
+        <div className="flex gap-3 pl-4 pr-6 overflow-x-auto no-scrollbar pb-2 em-snap-x">
+          {events.map(e => <EventCard key={e.id} event={e} variant="trending" />)}
+        </div>
       </div>
     </Section>
   );
