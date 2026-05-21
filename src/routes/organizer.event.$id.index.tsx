@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { TopBar } from "@/components/TopBar";
 import { PrimaryButton } from "@/components/PrimaryButton";
-import { EVENTS, formatNaira, SCAN_NAMES } from "@/data/mockData";
+import { EVENTS, formatNaira } from "@/data/mockData";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
 import { Pencil, Share2, ScanLine } from "lucide-react";
 import { format } from "date-fns";
