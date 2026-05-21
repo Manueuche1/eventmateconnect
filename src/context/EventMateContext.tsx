@@ -25,24 +25,38 @@ const Ctx = createContext<State | null>(null);
 
 const LS = "eventmate:v1";
 
-function load() {
-  if (typeof window === "undefined") return null;
-  try { return JSON.parse(localStorage.getItem(LS) || "null"); } catch { return null; }
-}
-
 export function EventMateProvider({ children }: { children: ReactNode }) {
-  const init = load() || {};
-  const [signedIn, setSignedIn] = useState<boolean>(!!init.signedIn);
-  const [onboarded, setOnboarded] = useState<boolean>(!!init.onboarded);
-  const [prefs, setPrefs] = useState<Prefs>(init.prefs || { categories: ATTENDEE_USER.preferences, areas: ATTENDEE_USER.areas });
-  const [saved, setSaved] = useState<string[]>(init.saved || []);
-  const [tickets, setTickets] = useState<Ticket[]>(init.tickets || []);
-  const [role, setRole] = useState<"attendee" | "organizer">(init.role || "attendee");
+  // Initialize with defaults so SSR and first client render match.
+  const [signedIn, setSignedIn] = useState<boolean>(false);
+  const [onboarded, setOnboarded] = useState<boolean>(false);
+  const [prefs, setPrefs] = useState<Prefs>({ categories: ATTENDEE_USER.preferences, areas: ATTENDEE_USER.areas });
+  const [saved, setSaved] = useState<string[]>([]);
+  const [tickets, setTickets] = useState<Ticket[]>([]);
+  const [role, setRole] = useState<"attendee" | "organizer">("attendee");
+  const [hydrated, setHydrated] = useState(false);
 
+  // Load persisted state after mount (client-only).
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    try {
+      const raw = localStorage.getItem(LS);
+      if (raw) {
+        const init = JSON.parse(raw);
+        if (typeof init.signedIn === "boolean") setSignedIn(init.signedIn);
+        if (typeof init.onboarded === "boolean") setOnboarded(init.onboarded);
+        if (init.prefs) setPrefs(init.prefs);
+        if (Array.isArray(init.saved)) setSaved(init.saved);
+        if (Array.isArray(init.tickets)) setTickets(init.tickets);
+        if (init.role) setRole(init.role);
+      }
+    } catch {}
+    setHydrated(true);
+  }, []);
+
+  // Persist after hydration.
+  useEffect(() => {
+    if (!hydrated) return;
     localStorage.setItem(LS, JSON.stringify({ signedIn, onboarded, prefs, saved, tickets, role }));
-  }, [signedIn, onboarded, prefs, saved, tickets, role]);
+  }, [hydrated, signedIn, onboarded, prefs, saved, tickets, role]);
 
   const value: State = useMemo(() => ({
     signedIn,
