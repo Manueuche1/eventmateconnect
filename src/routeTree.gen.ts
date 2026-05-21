@@ -17,6 +17,7 @@ import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as HomeRouteImport } from './routes/home'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as OrganizerIndexRouteImport } from './routes/organizer.index'
 import { Route as TicketIdRouteImport } from './routes/ticket.$id'
 import { Route as AuthOtpRouteImport } from './routes/auth.otp'
 import { Route as EventIdIndexRouteImport } from './routes/event.$id.index'
@@ -24,6 +25,8 @@ import { Route as EventIdSuccessRouteImport } from './routes/event.$id.success'
 import { Route as EventIdProcessingRouteImport } from './routes/event.$id.processing'
 import { Route as EventIdPaymentRouteImport } from './routes/event.$id.payment'
 import { Route as EventIdCheckoutRouteImport } from './routes/event.$id.checkout'
+import { Route as OrganizerEventIdIndexRouteImport } from './routes/organizer.event.$id.index'
+import { Route as OrganizerEventIdScannerRouteImport } from './routes/organizer.event.$id.scanner'
 
 const TicketsRoute = TicketsRouteImport.update({
   id: '/tickets',
@@ -65,6 +68,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OrganizerIndexRoute = OrganizerIndexRouteImport.update({
+  id: '/organizer/',
+  path: '/organizer/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TicketIdRoute = TicketIdRouteImport.update({
   id: '/ticket/$id',
   path: '/ticket/$id',
@@ -100,6 +108,16 @@ const EventIdCheckoutRoute = EventIdCheckoutRouteImport.update({
   path: '/event/$id/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OrganizerEventIdIndexRoute = OrganizerEventIdIndexRouteImport.update({
+  id: '/organizer/event/$id/',
+  path: '/organizer/event/$id/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OrganizerEventIdScannerRoute = OrganizerEventIdScannerRouteImport.update({
+  id: '/organizer/event/$id/scanner',
+  path: '/organizer/event/$id/scanner',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -112,11 +130,14 @@ export interface FileRoutesByFullPath {
   '/tickets': typeof TicketsRoute
   '/auth/otp': typeof AuthOtpRoute
   '/ticket/$id': typeof TicketIdRoute
+  '/organizer/': typeof OrganizerIndexRoute
   '/event/$id/checkout': typeof EventIdCheckoutRoute
   '/event/$id/payment': typeof EventIdPaymentRoute
   '/event/$id/processing': typeof EventIdProcessingRoute
   '/event/$id/success': typeof EventIdSuccessRoute
   '/event/$id/': typeof EventIdIndexRoute
+  '/organizer/event/$id/scanner': typeof OrganizerEventIdScannerRoute
+  '/organizer/event/$id/': typeof OrganizerEventIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -129,11 +150,14 @@ export interface FileRoutesByTo {
   '/tickets': typeof TicketsRoute
   '/auth/otp': typeof AuthOtpRoute
   '/ticket/$id': typeof TicketIdRoute
+  '/organizer': typeof OrganizerIndexRoute
   '/event/$id/checkout': typeof EventIdCheckoutRoute
   '/event/$id/payment': typeof EventIdPaymentRoute
   '/event/$id/processing': typeof EventIdProcessingRoute
   '/event/$id/success': typeof EventIdSuccessRoute
   '/event/$id': typeof EventIdIndexRoute
+  '/organizer/event/$id/scanner': typeof OrganizerEventIdScannerRoute
+  '/organizer/event/$id': typeof OrganizerEventIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -147,11 +171,14 @@ export interface FileRoutesById {
   '/tickets': typeof TicketsRoute
   '/auth/otp': typeof AuthOtpRoute
   '/ticket/$id': typeof TicketIdRoute
+  '/organizer/': typeof OrganizerIndexRoute
   '/event/$id/checkout': typeof EventIdCheckoutRoute
   '/event/$id/payment': typeof EventIdPaymentRoute
   '/event/$id/processing': typeof EventIdProcessingRoute
   '/event/$id/success': typeof EventIdSuccessRoute
   '/event/$id/': typeof EventIdIndexRoute
+  '/organizer/event/$id/scanner': typeof OrganizerEventIdScannerRoute
+  '/organizer/event/$id/': typeof OrganizerEventIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -166,11 +193,14 @@ export interface FileRouteTypes {
     | '/tickets'
     | '/auth/otp'
     | '/ticket/$id'
+    | '/organizer/'
     | '/event/$id/checkout'
     | '/event/$id/payment'
     | '/event/$id/processing'
     | '/event/$id/success'
     | '/event/$id/'
+    | '/organizer/event/$id/scanner'
+    | '/organizer/event/$id/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -183,11 +213,14 @@ export interface FileRouteTypes {
     | '/tickets'
     | '/auth/otp'
     | '/ticket/$id'
+    | '/organizer'
     | '/event/$id/checkout'
     | '/event/$id/payment'
     | '/event/$id/processing'
     | '/event/$id/success'
     | '/event/$id'
+    | '/organizer/event/$id/scanner'
+    | '/organizer/event/$id'
   id:
     | '__root__'
     | '/'
@@ -200,11 +233,14 @@ export interface FileRouteTypes {
     | '/tickets'
     | '/auth/otp'
     | '/ticket/$id'
+    | '/organizer/'
     | '/event/$id/checkout'
     | '/event/$id/payment'
     | '/event/$id/processing'
     | '/event/$id/success'
     | '/event/$id/'
+    | '/organizer/event/$id/scanner'
+    | '/organizer/event/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -217,11 +253,14 @@ export interface RootRouteChildren {
   SavedRoute: typeof SavedRoute
   TicketsRoute: typeof TicketsRoute
   TicketIdRoute: typeof TicketIdRoute
+  OrganizerIndexRoute: typeof OrganizerIndexRoute
   EventIdCheckoutRoute: typeof EventIdCheckoutRoute
   EventIdPaymentRoute: typeof EventIdPaymentRoute
   EventIdProcessingRoute: typeof EventIdProcessingRoute
   EventIdSuccessRoute: typeof EventIdSuccessRoute
   EventIdIndexRoute: typeof EventIdIndexRoute
+  OrganizerEventIdScannerRoute: typeof OrganizerEventIdScannerRoute
+  OrganizerEventIdIndexRoute: typeof OrganizerEventIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -282,6 +321,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/organizer/': {
+      id: '/organizer/'
+      path: '/organizer'
+      fullPath: '/organizer/'
+      preLoaderRoute: typeof OrganizerIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ticket/$id': {
       id: '/ticket/$id'
       path: '/ticket/$id'
@@ -331,6 +377,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventIdCheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/organizer/event/$id/': {
+      id: '/organizer/event/$id/'
+      path: '/organizer/event/$id'
+      fullPath: '/organizer/event/$id/'
+      preLoaderRoute: typeof OrganizerEventIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/organizer/event/$id/scanner': {
+      id: '/organizer/event/$id/scanner'
+      path: '/organizer/event/$id/scanner'
+      fullPath: '/organizer/event/$id/scanner'
+      preLoaderRoute: typeof OrganizerEventIdScannerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -354,12 +414,25 @@ const rootRouteChildren: RootRouteChildren = {
   SavedRoute: SavedRoute,
   TicketsRoute: TicketsRoute,
   TicketIdRoute: TicketIdRoute,
+  OrganizerIndexRoute: OrganizerIndexRoute,
   EventIdCheckoutRoute: EventIdCheckoutRoute,
   EventIdPaymentRoute: EventIdPaymentRoute,
   EventIdProcessingRoute: EventIdProcessingRoute,
   EventIdSuccessRoute: EventIdSuccessRoute,
   EventIdIndexRoute: EventIdIndexRoute,
+  OrganizerEventIdScannerRoute: OrganizerEventIdScannerRoute,
+  OrganizerEventIdIndexRoute: OrganizerEventIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
