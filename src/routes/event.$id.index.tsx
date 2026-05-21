@@ -4,8 +4,7 @@ import { PhoneFrame } from "@/components/PhoneFrame";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { EVENTS, SAMPLE_REVIEWS, formatNaira, isEventSoldOut, minTierPrice } from "@/data/mockData";
 import { useEventMate } from "@/context/EventMateContext";
-import { ChevronLeft, Heart, BadgeCheck, Calendar, MapPin, Star } from "lucide-react";
-import { Check, MapPin as MapPinIcon } from "lucide-react";
+import { ChevronLeft, Heart, BadgeCheck, Calendar, MapPin, Star, Check } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
 
@@ -88,7 +87,7 @@ function EventDetail() {
           </div>
 
           <button className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-brand-indigo bg-brand-mist hover:bg-brand-mist/70 px-3 py-1.5 rounded-full transition-colors">
-            <MapPinIcon className="h-3.5 w-3.5" /> Show on map
+            <MapPin className="h-3.5 w-3.5" /> Show on map
           </button>
 
           <div className="mt-6 flex gap-6 border-b border-brand-mist text-sm">
