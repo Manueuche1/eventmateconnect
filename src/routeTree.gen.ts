@@ -17,7 +17,13 @@ import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as HomeRouteImport } from './routes/home'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TicketIdRouteImport } from './routes/ticket.$id'
 import { Route as AuthOtpRouteImport } from './routes/auth.otp'
+import { Route as EventIdIndexRouteImport } from './routes/event.$id.index'
+import { Route as EventIdSuccessRouteImport } from './routes/event.$id.success'
+import { Route as EventIdProcessingRouteImport } from './routes/event.$id.processing'
+import { Route as EventIdPaymentRouteImport } from './routes/event.$id.payment'
+import { Route as EventIdCheckoutRouteImport } from './routes/event.$id.checkout'
 
 const TicketsRoute = TicketsRouteImport.update({
   id: '/tickets',
@@ -59,10 +65,40 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TicketIdRoute = TicketIdRouteImport.update({
+  id: '/ticket/$id',
+  path: '/ticket/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthOtpRoute = AuthOtpRouteImport.update({
   id: '/otp',
   path: '/otp',
   getParentRoute: () => AuthRoute,
+} as any)
+const EventIdIndexRoute = EventIdIndexRouteImport.update({
+  id: '/event/$id/',
+  path: '/event/$id/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventIdSuccessRoute = EventIdSuccessRouteImport.update({
+  id: '/event/$id/success',
+  path: '/event/$id/success',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventIdProcessingRoute = EventIdProcessingRouteImport.update({
+  id: '/event/$id/processing',
+  path: '/event/$id/processing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventIdPaymentRoute = EventIdPaymentRouteImport.update({
+  id: '/event/$id/payment',
+  path: '/event/$id/payment',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventIdCheckoutRoute = EventIdCheckoutRouteImport.update({
+  id: '/event/$id/checkout',
+  path: '/event/$id/checkout',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -75,6 +111,12 @@ export interface FileRoutesByFullPath {
   '/saved': typeof SavedRoute
   '/tickets': typeof TicketsRoute
   '/auth/otp': typeof AuthOtpRoute
+  '/ticket/$id': typeof TicketIdRoute
+  '/event/$id/checkout': typeof EventIdCheckoutRoute
+  '/event/$id/payment': typeof EventIdPaymentRoute
+  '/event/$id/processing': typeof EventIdProcessingRoute
+  '/event/$id/success': typeof EventIdSuccessRoute
+  '/event/$id/': typeof EventIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -86,6 +128,12 @@ export interface FileRoutesByTo {
   '/saved': typeof SavedRoute
   '/tickets': typeof TicketsRoute
   '/auth/otp': typeof AuthOtpRoute
+  '/ticket/$id': typeof TicketIdRoute
+  '/event/$id/checkout': typeof EventIdCheckoutRoute
+  '/event/$id/payment': typeof EventIdPaymentRoute
+  '/event/$id/processing': typeof EventIdProcessingRoute
+  '/event/$id/success': typeof EventIdSuccessRoute
+  '/event/$id': typeof EventIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -98,6 +146,12 @@ export interface FileRoutesById {
   '/saved': typeof SavedRoute
   '/tickets': typeof TicketsRoute
   '/auth/otp': typeof AuthOtpRoute
+  '/ticket/$id': typeof TicketIdRoute
+  '/event/$id/checkout': typeof EventIdCheckoutRoute
+  '/event/$id/payment': typeof EventIdPaymentRoute
+  '/event/$id/processing': typeof EventIdProcessingRoute
+  '/event/$id/success': typeof EventIdSuccessRoute
+  '/event/$id/': typeof EventIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -111,6 +165,12 @@ export interface FileRouteTypes {
     | '/saved'
     | '/tickets'
     | '/auth/otp'
+    | '/ticket/$id'
+    | '/event/$id/checkout'
+    | '/event/$id/payment'
+    | '/event/$id/processing'
+    | '/event/$id/success'
+    | '/event/$id/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -122,6 +182,12 @@ export interface FileRouteTypes {
     | '/saved'
     | '/tickets'
     | '/auth/otp'
+    | '/ticket/$id'
+    | '/event/$id/checkout'
+    | '/event/$id/payment'
+    | '/event/$id/processing'
+    | '/event/$id/success'
+    | '/event/$id'
   id:
     | '__root__'
     | '/'
@@ -133,6 +199,12 @@ export interface FileRouteTypes {
     | '/saved'
     | '/tickets'
     | '/auth/otp'
+    | '/ticket/$id'
+    | '/event/$id/checkout'
+    | '/event/$id/payment'
+    | '/event/$id/processing'
+    | '/event/$id/success'
+    | '/event/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -144,6 +216,12 @@ export interface RootRouteChildren {
   RoleSwitcherRoute: typeof RoleSwitcherRoute
   SavedRoute: typeof SavedRoute
   TicketsRoute: typeof TicketsRoute
+  TicketIdRoute: typeof TicketIdRoute
+  EventIdCheckoutRoute: typeof EventIdCheckoutRoute
+  EventIdPaymentRoute: typeof EventIdPaymentRoute
+  EventIdProcessingRoute: typeof EventIdProcessingRoute
+  EventIdSuccessRoute: typeof EventIdSuccessRoute
+  EventIdIndexRoute: typeof EventIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -204,12 +282,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ticket/$id': {
+      id: '/ticket/$id'
+      path: '/ticket/$id'
+      fullPath: '/ticket/$id'
+      preLoaderRoute: typeof TicketIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth/otp': {
       id: '/auth/otp'
       path: '/otp'
       fullPath: '/auth/otp'
       preLoaderRoute: typeof AuthOtpRouteImport
       parentRoute: typeof AuthRoute
+    }
+    '/event/$id/': {
+      id: '/event/$id/'
+      path: '/event/$id'
+      fullPath: '/event/$id/'
+      preLoaderRoute: typeof EventIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/event/$id/success': {
+      id: '/event/$id/success'
+      path: '/event/$id/success'
+      fullPath: '/event/$id/success'
+      preLoaderRoute: typeof EventIdSuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/event/$id/processing': {
+      id: '/event/$id/processing'
+      path: '/event/$id/processing'
+      fullPath: '/event/$id/processing'
+      preLoaderRoute: typeof EventIdProcessingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/event/$id/payment': {
+      id: '/event/$id/payment'
+      path: '/event/$id/payment'
+      fullPath: '/event/$id/payment'
+      preLoaderRoute: typeof EventIdPaymentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/event/$id/checkout': {
+      id: '/event/$id/checkout'
+      path: '/event/$id/checkout'
+      fullPath: '/event/$id/checkout'
+      preLoaderRoute: typeof EventIdCheckoutRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -233,6 +353,12 @@ const rootRouteChildren: RootRouteChildren = {
   RoleSwitcherRoute: RoleSwitcherRoute,
   SavedRoute: SavedRoute,
   TicketsRoute: TicketsRoute,
+  TicketIdRoute: TicketIdRoute,
+  EventIdCheckoutRoute: EventIdCheckoutRoute,
+  EventIdPaymentRoute: EventIdPaymentRoute,
+  EventIdProcessingRoute: EventIdProcessingRoute,
+  EventIdSuccessRoute: EventIdSuccessRoute,
+  EventIdIndexRoute: EventIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
