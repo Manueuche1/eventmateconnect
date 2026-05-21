@@ -20,7 +20,7 @@ function Checkout() {
   const event = EVENTS.find(e => e.id === id)!;
   const tier = event.tiers.find(t => t.id === tierId)!;
   const { signedIn } = useEventMate();
-  const [qty, setQty] = useState(initialQty || 1);
+  const [qty, setQty] = useState<number>(initialQty || 1);
   const [seconds, setSeconds] = useState(10 * 60);
 
   useEffect(() => {
