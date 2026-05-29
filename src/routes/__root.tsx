@@ -10,6 +10,7 @@ import {
 
 import appCss from "../styles.css?url";
 import { EventMateProvider } from "@/context/EventMateContext";
+import { AuthProvider } from "@/context/AuthContext";
 import { Toaster } from "sonner";
 
 function NotFoundComponent() {
@@ -122,10 +123,12 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <EventMateProvider>
-        <Outlet />
-        <Toaster position="top-center" richColors />
-      </EventMateProvider>
+      <AuthProvider>
+        <EventMateProvider>
+          <Outlet />
+          <Toaster position="top-center" richColors />
+        </EventMateProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
