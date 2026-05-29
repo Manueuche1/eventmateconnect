@@ -5,6 +5,7 @@ import { TopBar } from "@/components/TopBar";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { EVENTS, formatNaira } from "@/data/mockData";
 import { useEventMate } from "@/context/EventMateContext";
+import { useRequireAuth } from "@/context/AuthContext";
 import { z } from "zod";
 import { Minus, Plus } from "lucide-react";
 
@@ -14,6 +15,7 @@ export const Route = createFileRoute("/event/$id/checkout")({
 });
 
 function Checkout() {
+  useRequireAuth();
   const { id } = Route.useParams();
   const { tierId, qty: initialQty } = useSearch({ from: "/event/$id/checkout" });
   const navigate = useNavigate();
