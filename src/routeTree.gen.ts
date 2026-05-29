@@ -19,7 +19,6 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as OrganizerIndexRouteImport } from './routes/organizer.index'
 import { Route as TicketIdRouteImport } from './routes/ticket.$id'
-import { Route as AuthOtpRouteImport } from './routes/auth.otp'
 import { Route as EventIdIndexRouteImport } from './routes/event.$id.index'
 import { Route as EventIdSuccessRouteImport } from './routes/event.$id.success'
 import { Route as EventIdProcessingRouteImport } from './routes/event.$id.processing'
@@ -78,11 +77,6 @@ const TicketIdRoute = TicketIdRouteImport.update({
   path: '/ticket/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthOtpRoute = AuthOtpRouteImport.update({
-  id: '/otp',
-  path: '/otp',
-  getParentRoute: () => AuthRoute,
-} as any)
 const EventIdIndexRoute = EventIdIndexRouteImport.update({
   id: '/event/$id/',
   path: '/event/$id/',
@@ -121,14 +115,13 @@ const OrganizerEventIdScannerRoute = OrganizerEventIdScannerRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/auth': typeof AuthRouteWithChildren
+  '/auth': typeof AuthRoute
   '/home': typeof HomeRoute
   '/onboarding': typeof OnboardingRoute
   '/profile': typeof ProfileRoute
   '/role-switcher': typeof RoleSwitcherRoute
   '/saved': typeof SavedRoute
   '/tickets': typeof TicketsRoute
-  '/auth/otp': typeof AuthOtpRoute
   '/ticket/$id': typeof TicketIdRoute
   '/organizer/': typeof OrganizerIndexRoute
   '/event/$id/checkout': typeof EventIdCheckoutRoute
@@ -141,14 +134,13 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/auth': typeof AuthRouteWithChildren
+  '/auth': typeof AuthRoute
   '/home': typeof HomeRoute
   '/onboarding': typeof OnboardingRoute
   '/profile': typeof ProfileRoute
   '/role-switcher': typeof RoleSwitcherRoute
   '/saved': typeof SavedRoute
   '/tickets': typeof TicketsRoute
-  '/auth/otp': typeof AuthOtpRoute
   '/ticket/$id': typeof TicketIdRoute
   '/organizer': typeof OrganizerIndexRoute
   '/event/$id/checkout': typeof EventIdCheckoutRoute
@@ -162,14 +154,13 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/auth': typeof AuthRouteWithChildren
+  '/auth': typeof AuthRoute
   '/home': typeof HomeRoute
   '/onboarding': typeof OnboardingRoute
   '/profile': typeof ProfileRoute
   '/role-switcher': typeof RoleSwitcherRoute
   '/saved': typeof SavedRoute
   '/tickets': typeof TicketsRoute
-  '/auth/otp': typeof AuthOtpRoute
   '/ticket/$id': typeof TicketIdRoute
   '/organizer/': typeof OrganizerIndexRoute
   '/event/$id/checkout': typeof EventIdCheckoutRoute
@@ -191,7 +182,6 @@ export interface FileRouteTypes {
     | '/role-switcher'
     | '/saved'
     | '/tickets'
-    | '/auth/otp'
     | '/ticket/$id'
     | '/organizer/'
     | '/event/$id/checkout'
@@ -211,7 +201,6 @@ export interface FileRouteTypes {
     | '/role-switcher'
     | '/saved'
     | '/tickets'
-    | '/auth/otp'
     | '/ticket/$id'
     | '/organizer'
     | '/event/$id/checkout'
@@ -231,7 +220,6 @@ export interface FileRouteTypes {
     | '/role-switcher'
     | '/saved'
     | '/tickets'
-    | '/auth/otp'
     | '/ticket/$id'
     | '/organizer/'
     | '/event/$id/checkout'
@@ -245,7 +233,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AuthRoute: typeof AuthRouteWithChildren
+  AuthRoute: typeof AuthRoute
   HomeRoute: typeof HomeRoute
   OnboardingRoute: typeof OnboardingRoute
   ProfileRoute: typeof ProfileRoute
@@ -335,13 +323,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TicketIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/auth/otp': {
-      id: '/auth/otp'
-      path: '/otp'
-      fullPath: '/auth/otp'
-      preLoaderRoute: typeof AuthOtpRouteImport
-      parentRoute: typeof AuthRoute
-    }
     '/event/$id/': {
       id: '/event/$id/'
       path: '/event/$id'
@@ -394,19 +375,9 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface AuthRouteChildren {
-  AuthOtpRoute: typeof AuthOtpRoute
-}
-
-const AuthRouteChildren: AuthRouteChildren = {
-  AuthOtpRoute: AuthOtpRoute,
-}
-
-const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AuthRoute: AuthRouteWithChildren,
+  AuthRoute: AuthRoute,
   HomeRoute: HomeRoute,
   OnboardingRoute: OnboardingRoute,
   ProfileRoute: ProfileRoute,

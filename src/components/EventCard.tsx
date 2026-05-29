@@ -1,22 +1,35 @@
 import { Link } from "@tanstack/react-router";
 import { Heart, BadgeCheck } from "lucide-react";
-import { EventItem, formatNaira, minTierPrice, isEventSoldOut } from "@/data/mockData";
-import { useEventMate } from "@/context/EventMateContext";
+import { useAuth } from "@/context/AuthContext";
 import { format } from "date-fns";
 import { useState } from "react";
+import { toast } from "sonner";
+
+export interface FeedEvent {
+  id: string;
+  title: string;
+  hero_image: string;
+  event_date: string;
+  venue: string;
+  area: string;
+  description: string;
+  category: string;
+  trending: boolean;
+  organizer_name?: string | null;
+  organizer_verified?: boolean | null;
+}
 
 export function EventCard({
   event,
   size = "md",
   variant = "default",
 }: {
-  event: EventItem;
+  event: FeedEvent;
   size?: "sm" | "md" | "lg";
   variant?: "default" | "trending" | "foryou";
 }) {
-  const { saved, toggleSave } = useEventMate();
-  const isSaved = saved.includes(event.id);
-  const soldOut = isEventSoldOut(event);
+  const { savedIds, toggleSave, user } = useAuth();
+  const isSaved = savedIds.has(event.id);
   const [pop, setPop] = useState(0);
 
   const widthClass =
@@ -35,6 +48,7 @@ export function EventCard({
   const handleSave = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    if (!user) { toast("Sign in to save events"); return; }
     toggleSave(event.id);
     setPop(p => p + 1);
   };
@@ -47,7 +61,7 @@ export function EventCard({
     >
       <div className="relative aspect-[3/4] bg-brand-mist">
         <img
-          src={event.heroImage}
+          src={event.hero_image}
           alt={event.title}
           className="absolute inset-0 h-full w-full object-cover"
           loading="lazy"
@@ -55,15 +69,9 @@ export function EventCard({
         {/* Bottom 50% indigo gradient overlay */}
         <div className="absolute inset-0 em-trending-gradient pointer-events-none" />
 
-        {/* Top-left badge */}
-        {variant === "trending" && !soldOut && (
+        {variant === "trending" && (
           <span className="absolute top-2 left-2 text-[9px] font-bold tracking-[0.18em] uppercase bg-brand-amber text-brand-indigo px-2 py-1 rounded-md shadow-sm">
             Trending
-          </span>
-        )}
-        {soldOut && (
-          <span className="absolute top-2 left-2 text-[10px] font-semibold tracking-wider uppercase bg-brand-ink/85 text-white px-2 py-1 rounded">
-            Sold out
           </span>
         )}
 
@@ -86,15 +94,17 @@ export function EventCard({
 
         {/* Text overlay */}
         <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
-          <div className="flex items-center gap-1 text-[11px] text-brand-amber font-medium">
-            <span className="truncate">{event.organizer}</span>
-            {event.organizerVerified && <BadgeCheck className="h-3 w-3 text-brand-amber shrink-0" />}
-          </div>
+          {event.organizer_name && (
+            <div className="flex items-center gap-1 text-[11px] text-brand-amber font-medium">
+              <span className="truncate">{event.organizer_name}</span>
+              {event.organizer_verified && <BadgeCheck className="h-3 w-3 text-brand-amber shrink-0" />}
+            </div>
+          )}
           <div className="text-[16px] font-semibold leading-snug line-clamp-2 mt-0.5 text-white">
             {event.title}
           </div>
           <div className="text-[12px] text-white/70 mt-1">
-            {format(new Date(event.date), "EEE, MMM d • h:mm a")}
+            {format(new Date(event.event_date), "EEE, MMM d • h:mm a")}
           </div>
           <div className="text-[12px] text-white/70">
             {event.venue}, {event.area}
@@ -105,7 +115,7 @@ export function EventCard({
             </div>
           )}
           <div className="text-xs font-semibold text-brand-amber mt-1.5">
-            from {formatNaira(minTierPrice(event))}
+            Free in demo mode
           </div>
         </div>
       </div>
