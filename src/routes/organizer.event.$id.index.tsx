@@ -3,6 +3,7 @@ import { PhoneFrame } from "@/components/PhoneFrame";
 import { TopBar } from "@/components/TopBar";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { EVENTS, formatNaira } from "@/data/mockData";
+import { useRequireAuth } from "@/context/AuthContext";
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
 import { Pencil, Share2, ScanLine } from "lucide-react";
 import { format } from "date-fns";
@@ -23,6 +24,7 @@ const ATTENDEE_ROWS = [
 ];
 
 function OrgEvent() {
+  useRequireAuth({ role: "organizer" });
   const { id } = Route.useParams();
   const e = EVENTS.find(x => x.id === id)!;
   const tierData = e.tiers.map(t => ({ name: t.name, sold: t.total - t.available }));

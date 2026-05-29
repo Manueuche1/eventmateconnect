@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { OrganizerFrame } from "@/components/OrganizerFrame";
+import { useRequireAuth } from "@/context/AuthContext";
 import { EVENTS, ORGANIZER_USER, formatNaira } from "@/data/mockData";
 import { Logo } from "@/components/Logo";
 import { format } from "date-fns";
@@ -27,6 +28,7 @@ const ACTIVITY = [
 ];
 
 function OrganizerDashboard() {
+  useRequireAuth({ role: "organizer" });
   const myEvents = EVENTS.filter(e => ORGANIZER_USER.eventIds.includes(e.id));
   const stats: { label: string; value: string; sub?: string; trend: number }[] = [
     { label: "Total events", value: "8", trend: 14 },
