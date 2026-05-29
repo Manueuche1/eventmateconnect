@@ -61,7 +61,7 @@ export function EventCard({
     >
       <div className="relative aspect-[3/4] bg-brand-mist">
         <img
-          src={event.heroImage}
+          src={event.hero_image}
           alt={event.title}
           className="absolute inset-0 h-full w-full object-cover"
           loading="lazy"
