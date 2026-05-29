@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { EVENTS, SCAN_NAMES } from "@/data/mockData";
+import { useRequireAuth } from "@/context/AuthContext";
 import { Keyboard, X, Check, AlertCircle } from "lucide-react";
 
 export const Route = createFileRoute("/organizer/event/$id/scanner")({ component: Scanner });
@@ -13,6 +14,7 @@ const now = () => {
 };
 
 function Scanner() {
+  useRequireAuth({ role: "organizer" });
   const { id } = Route.useParams();
   const e = EVENTS.find(x => x.id === id)!;
   const [result, setResult] = useState<null | { ok: boolean; name: string; tier: string; time?: string }>(null);
