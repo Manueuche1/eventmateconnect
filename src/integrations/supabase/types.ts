@@ -14,7 +14,252 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      events: {
+        Row: {
+          area: string
+          category: string
+          created_at: string | null
+          description: string
+          doors_open: string | null
+          event_date: string
+          hero_image: string
+          id: string
+          is_published: boolean | null
+          organizer_id: string
+          rating: number | null
+          review_count: number | null
+          title: string
+          trending: boolean | null
+          venue: string
+        }
+        Insert: {
+          area: string
+          category: string
+          created_at?: string | null
+          description: string
+          doors_open?: string | null
+          event_date: string
+          hero_image: string
+          id?: string
+          is_published?: boolean | null
+          organizer_id: string
+          rating?: number | null
+          review_count?: number | null
+          title: string
+          trending?: boolean | null
+          venue: string
+        }
+        Update: {
+          area?: string
+          category?: string
+          created_at?: string | null
+          description?: string
+          doors_open?: string | null
+          event_date?: string
+          hero_image?: string
+          id?: string
+          is_published?: boolean | null
+          organizer_id?: string
+          rating?: number | null
+          review_count?: number | null
+          title?: string
+          trending?: boolean | null
+          venue?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "events_organizer_id_fkey"
+            columns: ["organizer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_initials: string | null
+          created_at: string | null
+          full_name: string
+          id: string
+          organization_name: string | null
+          organization_verified: boolean | null
+          preferences_areas: string[] | null
+          preferences_categories: string[] | null
+          role: string
+          updated_at: string | null
+        }
+        Insert: {
+          avatar_initials?: string | null
+          created_at?: string | null
+          full_name: string
+          id: string
+          organization_name?: string | null
+          organization_verified?: boolean | null
+          preferences_areas?: string[] | null
+          preferences_categories?: string[] | null
+          role?: string
+          updated_at?: string | null
+        }
+        Update: {
+          avatar_initials?: string | null
+          created_at?: string | null
+          full_name?: string
+          id?: string
+          organization_name?: string | null
+          organization_verified?: boolean | null
+          preferences_areas?: string[] | null
+          preferences_categories?: string[] | null
+          role?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      saved_events: {
+        Row: {
+          event_id: string
+          saved_at: string | null
+          user_id: string
+        }
+        Insert: {
+          event_id: string
+          saved_at?: string | null
+          user_id: string
+        }
+        Update: {
+          event_id?: string
+          saved_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "saved_events_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "saved_events_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ticket_tiers: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          display_order: number | null
+          event_id: string
+          id: string
+          name: string
+          price_ngn: number
+          quantity_sold: number
+          quantity_total: number
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          display_order?: number | null
+          event_id: string
+          id?: string
+          name: string
+          price_ngn?: number
+          quantity_sold?: number
+          quantity_total: number
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          display_order?: number | null
+          event_id?: string
+          id?: string
+          name?: string
+          price_ngn?: number
+          quantity_sold?: number
+          quantity_total?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ticket_tiers_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tickets: {
+        Row: {
+          event_id: string
+          holder_name: string
+          id: string
+          purchased_at: string | null
+          scanned_at: string | null
+          scanned_by: string | null
+          status: string
+          ticket_code: string
+          tier_id: string
+          user_id: string
+        }
+        Insert: {
+          event_id: string
+          holder_name: string
+          id?: string
+          purchased_at?: string | null
+          scanned_at?: string | null
+          scanned_by?: string | null
+          status?: string
+          ticket_code: string
+          tier_id: string
+          user_id: string
+        }
+        Update: {
+          event_id?: string
+          holder_name?: string
+          id?: string
+          purchased_at?: string | null
+          scanned_at?: string | null
+          scanned_by?: string | null
+          status?: string
+          ticket_code?: string
+          tier_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tickets_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tickets_scanned_by_fkey"
+            columns: ["scanned_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tickets_tier_id_fkey"
+            columns: ["tier_id"]
+            isOneToOne: false
+            referencedRelation: "ticket_tiers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tickets_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
