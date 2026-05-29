@@ -4,6 +4,7 @@ import { PhoneFrame } from "@/components/PhoneFrame";
 import { BottomTabs } from "@/components/BottomTabs";
 import { PrimaryButton } from "@/components/PrimaryButton";
 import { useEventMate } from "@/context/EventMateContext";
+import { useRequireAuth } from "@/context/AuthContext";
 import { EVENTS } from "@/data/mockData";
 import { QrCode } from "lucide-react";
 import { format } from "date-fns";
@@ -12,6 +13,7 @@ import { useNavigate } from "@tanstack/react-router";
 export const Route = createFileRoute("/tickets")({ component: TicketsScreen });
 
 function TicketsScreen() {
+  useRequireAuth();
   const { tickets } = useEventMate();
   const [tab, setTab] = useState<"upcoming" | "past">("upcoming");
   const navigate = useNavigate();
