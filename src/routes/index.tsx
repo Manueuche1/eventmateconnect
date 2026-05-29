@@ -1,18 +1,23 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { Logo } from "@/components/Logo";
-import { useEventMate } from "@/context/EventMateContext";
+import { useAuth } from "@/context/AuthContext";
 import { PhoneFrame } from "@/components/PhoneFrame";
 
 export const Route = createFileRoute("/")({ component: Splash });
 
 function Splash() {
   const navigate = useNavigate();
-  const { onboarded } = useEventMate();
+  const { loading, user, profile } = useAuth();
   useEffect(() => {
-    const t = setTimeout(() => navigate({ to: onboarded ? "/home" : "/onboarding" }), 1500);
+    if (loading) return;
+    const t = setTimeout(() => {
+      if (!user) navigate({ to: "/auth" });
+      else if (profile?.role === "organizer") navigate({ to: "/organizer" });
+      else navigate({ to: "/home" });
+    }, 800);
     return () => clearTimeout(t);
-  }, [navigate, onboarded]);
+  }, [loading, user, profile, navigate]);
   return (
     <PhoneFrame>
       <div className="flex-1 bg-brand-indigo flex flex-col items-center justify-center px-8">
