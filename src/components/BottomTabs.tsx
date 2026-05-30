@@ -21,10 +21,16 @@ export function BottomTabs() {
               className={`h-5 w-5 ${active ? "text-brand-indigo" : "text-brand-slate"}`}
               strokeWidth={active ? 2.4 : 1.8}
             />
-            <span className={`text-[11px] font-medium ${active ? "text-brand-indigo" : "text-brand-slate"}`}>
+            <span
+              className={`text-[11px] font-medium ${
+                active ? "text-brand-indigo" : "text-brand-slate"
+              }`}
+            >
               {t.label}
             </span>
-            <span className={`h-1 w-1 rounded-full ${active ? "bg-brand-amber" : "bg-transparent"}`} />
+            <span
+              className={`h-1 w-1 rounded-full ${active ? "bg-brand-amber" : "bg-transparent"}`}
+            />
           </Link>
         );
       })}
