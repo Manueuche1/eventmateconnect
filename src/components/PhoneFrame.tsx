@@ -23,7 +23,9 @@ export function PhoneFrame({ children }: { children: ReactNode }) {
 
       {/* Desktop: full-width layout, no phone frame */}
       <div className="hidden lg:flex min-h-screen w-full bg-white">
-        <div className="w-full max-w-[1280px] mx-auto px-8 flex flex-col min-h-screen">{children}</div>
+        <div className="w-full max-w-[1280px] mx-auto px-8 flex flex-col min-h-screen">
+          {children}
+        </div>
       </div>
     </div>
   );
