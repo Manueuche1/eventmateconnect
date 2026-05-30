@@ -10,6 +10,7 @@ import {
 import appCss from "../styles.css?url";
 import { EventMateProvider } from "@/context/EventMateContext";
 import { AuthProvider } from "@/context/AuthContext";
+import { TopNav } from "@/components/TopNav";
 import { Toaster } from "sonner";
 
 function NotFoundComponent() {
